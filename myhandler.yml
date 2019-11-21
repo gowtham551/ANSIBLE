@@ -1,28 +1,26 @@
 ---
+
 - hosts: webservers
   become: yes
   tasks: 
   - name: install tree 
     apt: 
-     name: tree
+     name: apache2
      state: present
-    notify: restart apache server
+    notify: 
+    - uninstallapache2
     when: ansible_os_family =="Debian"
 
   - name: install tree on redhat
     yum:
-     name: tree
+     name: httpd
      state: present
-    notify: restart httpd
+    notify: restarthttpd
     when: ansible_os_family =="RedHat"
 
- - handler:
- - name: restart apache server
-   service:
-    name: apache2
-    state: restarted
-
-  - name: restart httpd
-    service:
-     name: httpd
-     state: restarted
+  handlers:
+  - name: uninstallapache2
+    copy:
+     src: index.html
+     dest: /var/www/html/index.html
+    when: ansible_os_family =="Debiam"

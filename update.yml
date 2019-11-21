@@ -1,0 +1,21 @@
+---
+- hosts: webservers
+  become: yes
+  tasks:
+  - name: update ubuntu server
+    command: apt-get update
+    when: ansible_os_family =="Debian"
+    register: myresult
+ 
+  - name: display the above task result
+    debug:
+      msg: "{{myresult}}"
+  
+  - name: execute linux command
+    command: hostname -f 
+    register: myresult1
+
+  - name: display the above task result
+    debug:
+      msg: "{{myresult1}}"
+

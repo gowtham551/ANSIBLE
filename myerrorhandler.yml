@@ -1,0 +1,26 @@
+---
+- hosts: webservers
+  become: yes
+  tasks:
+  - name: install git
+    apt: 
+      name: git
+    when: "{{U_FAMILY}}"
+
+  - name: install wget
+    apt:
+      namee: wget
+    ignore_errors: yes
+  
+  - name: uninstall tree
+    apt:
+     name: tree
+     state: absent
+    notify: installtree
+    when: "{{U_FAMILY}}"
+
+  handlers:
+  - name: installtree
+    apt:
+     name: tree
+     state: present
