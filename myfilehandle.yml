@@ -1,0 +1,29 @@
+---
+- hosts: webservers
+  become: yes
+  tasks:
+  - include_tasks: myfile.yml
+  - name: install webserver on ubuntu
+    apt:
+     name: "{{ U }}"
+     state: "{{ P }}"
+    when: "{{ U_FAMILY }}"
+  - name: statrt webserver
+    service:
+     name: "{{ U }}"
+     state: "{{ST}}"
+    when: "{{ U_FAMILY }}"
+  - name: install webserver on redhat
+    yum:
+     name: "{{ R }}"
+     state: "{{ P }}"
+    when: "{{ R_FAMILY }}"
+  - name: start webserver on redhat
+    service:
+     name: "{{ R }}"
+     state: "{{ST}}"
+    when: "{{ R_FAMILY }}"
+  - name: copy index.j2 file into ansible node side
+    template:
+     src: index.j2
+     dest: /var/www/html/index.html

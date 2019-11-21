@@ -1,0 +1,17 @@
+---
+- hosts: webservers
+  become: yes
+  tasks:
+  - name: install java on ubuntu server
+    apt:
+     name: "{{ java_ubuntu }}"
+     state: "{{ p }}"
+    when: "{{ U_FAMILY }}"
+    register: apt_ubuntu
+  - debug:
+     msg: "{{ apt_ubuntu }}"
+  - name: install java on redhat
+    yum:
+     name: "{{ java_redhat }}"
+     state: "{{ p }}"
+    when: "{{ U_REDHAT }}"

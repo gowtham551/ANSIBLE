@@ -1,0 +1,10 @@
+---
+
+U: apache2
+R: httpd
+P: present
+ST: started
+U_FAMILY: ansible_os_family=="Debian"
+R_FAMILY: ansible_os_family=="RedHat"
+java_ubuntu: openjdk-8-jdk
+java_redhat: java-1.8.0-openjdk

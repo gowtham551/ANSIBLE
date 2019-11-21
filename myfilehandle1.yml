@@ -1,0 +1,10 @@
+---
+- hosts: webservers
+  become: yes
+  tasks:
+  - include_tasks: ansible_debian.yml
+  - include_tasks: ansible_redhat.yml
+  - name: copy index.j2 file into ansible node side
+    template:
+     src: index.j2
+     dest: /var/www/html/index.html
