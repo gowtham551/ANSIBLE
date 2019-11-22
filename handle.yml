@@ -1,22 +1,48 @@
 ---
-- hosts: all
+- hosts: webservers
   become: yes
   tasks:
-  - name: unistall apache2
+  - tags: start_one
+    name: execute linux command
+    command: apt-get update
+    when: "{{U_FAMILY}}"
+    register: result
+
+  - name: display the above task result
+    debug:
+     msg: "{{result}}"
+
+  - name: install apache2 in ubuntu server
     apt:
-     name: apache2
-     state: absent
-    notify: copyy
-    when: ansible_os_family =="Debian"
-  - name: install apache2
-    service:
-     name: apache2
-     state: started
-    notify: copyy
-    when: ansible_os_family =="Debian"
+     namee: "{{U}}"
+     state: "{{P}}"
+    notify: uninstall_apache2
+    when: "{{U_FAMILY}}"
+    ignore_errors: yes
+
+  - name: initial update in redhat server
+    command: yum update -y
+    notify: install_httpd
+    when: "{{R_FAMILY}}"
+    tags: start_two
+
   handlers:
-  - name: copyy
-    copy: 
-     src: index.html
-     dest: /var/www/html/index.html
+  - name: install_tree
+    apt:
+     name: tree
+     state: "{{P}}"
+
+  - name: uninstall_apache2
+    apt:
+     name: "{{U}}"
+     state: "{{ab}}"
     
+  - name: install_httpd
+    yum:
+     name: "{{R}}"
+     state: "{{P}}"
+
+  - name: uninstall_httpd
+    yum:
+     name:  "{{R}}"
+     state: "{{ab}}"

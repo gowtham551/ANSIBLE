@@ -1,0 +1,32 @@
+---
+- hosts: 172.31.16.128
+  become: yes
+  tasks:
+  - name: install git
+    apt:
+     name: git
+     state: present
+    tags: 1st
+  - name: install tree
+    apt: 
+     name: tree
+     state: present
+    tags: 2nd
+  - name: install wget
+    apt:
+     name: wget
+     state: present
+    tags: 3rd
+  - name: uninstall apache
+    apt:
+     name: apache2
+     state: absent
+    ignore_errors: yes
+  - name: loop
+    apt: 
+     name: "{{item}}"
+     state: present
+    loop:
+     - git
+     - wget
+     - tree
