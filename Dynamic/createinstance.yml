@@ -1,0 +1,20 @@
+# ansible-playbook -i myhosts <playbookname.yml>
+# ansible tag_Name_Dynamic -i ec2.py -u gowtham -m ping
+# anible-playbook -i ec2.py -u gowtham  <playbookname>.yml
+---
+- hosts: localhost
+  become: yes
+  tasks:
+  - name: create ec2 instances
+    ec2:
+     key_name: tower
+     group: default
+     instance_type: t2.micro
+     image: ami-0dd723956a0ef04a6
+     region: us-east-1
+     wait: yes
+     count: 1
+     instance_tags:
+       Name: Dynamic
+     vpc_subnet_id: subnet-a5abe48b
+     assign_public_ip: yes
