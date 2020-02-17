@@ -7,14 +7,14 @@
   tasks:
   - name: create ec2 instances
     ec2:
-     key_name: tower
-     group: default
-     instance_type: t2.micro
      image: ami-0dd723956a0ef04a6
      region: us-east-1
-     wait: yes
+     instance_type: t2.micro
      count: 1
+     vpc_subnet_id: subnet-a5abe48b
+     group: default
+     wait: yes
      instance_tags:
        Name: Dynamic
-     vpc_subnet_id: subnet-a5abe48b
+     key_name: tower
      assign_public_ip: yes
