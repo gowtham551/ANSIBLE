@@ -12,9 +12,10 @@
      instance_type: t2.micro
      count: 1
      vpc_subnet_id: subnet-a5abe48b
-     group: default
+     assign_public_ip: yes
      wait: yes
      instance_tags:
        Name: Dynamic
+     group: default
      key_name: tower
-     assign_public_ip: yes
+     
